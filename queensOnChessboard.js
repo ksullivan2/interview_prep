@@ -10,6 +10,8 @@ for (var i = 0; i < 8; i++) {
 	QUEENS_LIST.push(new queen)
 }
 
+
+
 function copyQueens(queensList) {
 	var copiedQueensList = []
 	for (var i = 0; i < queensList.length; i++) {
@@ -41,33 +43,21 @@ function findPlaceForQueen(startIndex, queensList){
 
 			//base case: we found a valid permutation
 			if (startIndex === queensList.length - 1){
+				prettyPrint(queensList)
 				return queensList
 
-			} else {
-				var finishedList = findPlaceForQueen(startIndex+1, copyQueens(queensList))
-				if (finishedList != false){
-					if (startIndex !== 0){
-						return finishedList
-					} else {
-						permutations.push(finishedList)
-						prettyPrint(finishedList)
-					}
-				}
-				// console.log(row, col, "trying next row/col")
-			}
+			} 
+
+			findPlaceForQueen(startIndex+1, copyQueens(queensList))
 			
 		}
 	}
 	
-
-	if (startIndex !== 0){
-		return false
-	} else {
-		return permutations
-	}
+	return false;
 }
 
 
+var count = 1;
 
 function prettyPrint(queensList){
 	var board = []
@@ -82,26 +72,15 @@ function prettyPrint(queensList){
 		board[queensList[i].row][queensList[i].col] = "Q"
 	}
 
+	console.log(count)
 	for (var i = 0; i < board.length; i++) {
 		console.log(board[i].toString())
 	}
-		console.log()
+
+	count++
+		
 }
 	
-function equivalentQueensList(list1, list2) {
-	var somethingMatched = false
 
-	for (var i = 0; i < list1.length; i++) {
-		for (var j = 0; j < list2.length; j++) {
-			if (list1[i].row === list2[j].row && list1[i].col === list2[j].col){
-				somethingMatched = true;
-				break;
-			}
-		}
-		if (!somethingMatched){return false}
-		somethingMatched = false;
-	}
-	return true
-}
 	
 findPlaceForQueen(0, copyQueens(QUEENS_LIST))
